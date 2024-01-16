@@ -17,7 +17,8 @@ class SplashActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
             /**
-             * 원래 비동기 네트워크 작업 등을 수행
+             * postdelayed는 1500초가 지난 이후에 수행될 내용이다.
+             * 그저 ui 에서 진행될 사항을 예약하는정도의 메서드이다.
              */
             val intent = Intent(this,ListMainActivity::class.java)
             startActivity(intent)
