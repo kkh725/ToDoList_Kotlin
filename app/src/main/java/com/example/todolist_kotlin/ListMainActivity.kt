@@ -18,7 +18,7 @@ class ListMainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-
+        todoAdapter = TodoAdapter()
         //리사이클러뷰의 setadapter .
         binding.rvTodo.adapter = todoAdapter
 
