@@ -1,8 +1,12 @@
 package com.example.todolist_kotlin.adapter
 
+import android.content.DialogInterface
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist_kotlin.databinding.ListItemTodoBinding //listitemtodo xml 파일을 binding
 import com.example.todolist_kotlin.model.TodoInfo
@@ -44,7 +48,8 @@ private var lstTodo : ArrayList<TodoInfo> = ArrayList()
      * 이미 생성자로 List_Item_todo xml 이 참조되어있음. 따라서 binding으로 그냥 사용하기만하면됨.
      */
 
-    class TodoViewHolder(private val binding : ListItemTodoBinding) : RecyclerView.ViewHolder(binding.root){ //recyclerview의 viewholder이 todoviewholder의 본질.
+    //inner 클래스로 정의해줄시에 부모 클래스의 private 에 접근가능하다.
+    inner class TodoViewHolder(private val binding : ListItemTodoBinding) : RecyclerView.ViewHolder(binding.root){ //recyclerview의 viewholder이 todoviewholder의 본질.
         fun bind(todoItem : TodoInfo){
             binding.tvContent.text = todoItem.todoContent
             binding.tvDate.text = todoItem.todoDate
@@ -52,7 +57,21 @@ private var lstTodo : ArrayList<TodoInfo> = ArrayList()
             //리스트 삭제버튼 클릭연동
             binding.btnRemove.setOnClickListener {
                 //쓰레기통 클릭시 내부 로직 구현.
-                Log.d("hi","hi")
+                //onBindViewHolder에서 todoItem을 bind
+                AlertDialog.Builder(binding.root.context)
+                    .setTitle("주의")
+                    .setMessage("제거하시면 데이터는 복구되지 않습니다!\n")
+                    .setPositiveButton("제거",DialogInterface.OnClickListener { dialog, which ->
+                        lstTodo.remove(todoItem)
+                        notifyDataSetChanged()
+                        Toast.makeText(binding.root.context,"제거되었습니다.", LENGTH_SHORT).show()
+                    })
+                    .setNegativeButton("취소",DialogInterface.OnClickListener { dialog, which ->
+
+                    })
+                    .show()
+
+
             }
         }
     }
