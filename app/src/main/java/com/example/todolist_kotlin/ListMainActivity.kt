@@ -18,9 +18,16 @@ class ListMainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        //어댑터 인스턴스 생성
         todoAdapter = TodoAdapter()
+
         //리사이클러뷰의 setadapter .
         binding.rvTodo.adapter = todoAdapter
+
+        //작성하기 버튼 클릭
+        binding.btnWrite.setOnClickListener{
+
+        }
 
     }
 }

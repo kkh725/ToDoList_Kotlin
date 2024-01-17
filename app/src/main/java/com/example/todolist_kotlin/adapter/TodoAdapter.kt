@@ -10,7 +10,7 @@ import com.example.todolist_kotlin.model.TodoInfo
 
 class TodoAdapter : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
-public var lstTodo : ArrayList<TodoInfo> = ArrayList()
+private var lstTodo : ArrayList<TodoInfo> = ArrayList()
 
     init {
         /**
