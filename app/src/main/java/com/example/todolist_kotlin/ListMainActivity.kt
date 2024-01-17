@@ -1,10 +1,16 @@
 package com.example.todolist_kotlin
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import androidx.appcompat.app.AlertDialog
 import com.example.todolist_kotlin.adapter.TodoAdapter
 import com.example.todolist_kotlin.databinding.ActivityListMainBinding
+import com.example.todolist_kotlin.databinding.DialogEditBinding
 import com.example.todolist_kotlin.model.TodoInfo
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class ListMainActivity : AppCompatActivity() {
 
@@ -21,12 +27,32 @@ class ListMainActivity : AppCompatActivity() {
         //어댑터 인스턴스 생성
         todoAdapter = TodoAdapter()
 
-        //리사이클러뷰의 setadapter .
+        //리사이클러뷰의 set adapter .
         binding.rvTodo.adapter = todoAdapter
 
         //작성하기 버튼 클릭
         binding.btnWrite.setOnClickListener{
+            /**
+             * 작성하기 버튼을 눌렀을때
+             * 여기서 alertdialog 를 띄워서 작성값 입력받기
+             */
 
+            val bindingDialog = DialogEditBinding.inflate(LayoutInflater.from(binding.root.context),binding.root,false)
+
+            AlertDialog.Builder(this)
+                .setView(bindingDialog.root)
+                .setPositiveButton("작성완료",DialogInterface.OnClickListener { dialogInterface, which ->
+                    //작성완료 버튼 눌렀을때.
+                    val todoItem = TodoInfo()
+                    todoItem.todoContent = bindingDialog.etMemo.text.toString()
+                    todoItem.todoDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(Date())
+                    todoAdapter.addListItem(todoItem)
+                    todoAdapter.notifyDataSetChanged() //리스트 새로고침 로직. 데이터는 반영되지만 ui상에서는 구현안됨. 이 문장이 있어야 어답터/뷰홀더가 새로고침됨.
+
+                }) .setNegativeButton("취소",DialogInterface.OnClickListener { dialogInterface, which ->
+                    //알아서 취소버튼 눌려짐.
+                })
+                .show()
         }
 
     }

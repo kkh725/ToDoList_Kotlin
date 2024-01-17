@@ -33,6 +33,10 @@ private var lstTodo : ArrayList<TodoInfo> = ArrayList()
         lstTodo.add(todoItem3)
     }
 
+    fun addListItem(todoItem: TodoInfo){ //todoinfo 객체를 하나 넣어줘야함.
+        lstTodo.add(0,todoItem) //얘는 항상 마지막에 들어오도록 되어있는데, 스택형식으로 넣어주면 좋을듯? 이렇게 해주면 항상 0번째 index로 들어오게된다.
+    }
+
     /**
      * viewholder를 생성하는데 생성자로 binding 인스턴스를 받는다.
      * 그러니까 정리해보면, 사용자가 정의한 viewholder를 포함하고있는 recyclerview adapter를 만드는것. 어답터는 리사이클러뷰에 포함될것.
