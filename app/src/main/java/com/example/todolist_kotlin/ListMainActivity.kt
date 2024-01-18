@@ -1,6 +1,9 @@
 package com.example.todolist_kotlin
 
+import android.app.Dialog
 import android.content.DialogInterface
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -38,6 +41,8 @@ class ListMainActivity : AppCompatActivity() {
              */
 
             val bindingDialog = DialogEditBinding.inflate(LayoutInflater.from(binding.root.context),binding.root,false)
+            // 어둡게 하는 배경 레이아웃 설정
+
 
             AlertDialog.Builder(this)
                 .setView(bindingDialog.root)
