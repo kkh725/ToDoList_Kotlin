@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="1180"
+        motion:motionInterpolator="easeInOut"
+        motion:autoTransition="jumpToEnd">
+       <KeyFrameSet>
+           <KeyAttribute
+               motion:motionTarget="@+id/progressBar2"
+               motion:framePosition="61"
+               android:alpha="0" />
+           <KeyAttribute
+               motion:motionTarget="@+id/progressBar2"
+               motion:framePosition="100"
+               android:alpha="0.5" />
+       </KeyFrameSet>
+        <OnSwipe motion:maxAcceleration="4.64" />
+        <OnSwipe motion:touchAnchorId="@+id/progressBar2" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toTopOf="@+id/textView2"
+            android:layout_width="match_parent"
+            android:id="@+id/progressBar2"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/textView3"
+            motion:layout_constraintEnd_toEndOf="@+id/view"
+            android:layout_width="152dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="259dp"
+            android:layout_marginStart="50dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintHorizontal_bias="0.0"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="216dp" />
+        <Constraint
+            android:id="@+id/textView3"
+            motion:layout_constraintEnd_toEndOf="@+id/view"
+            android:layout_width="152dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="259dp"
+            android:layout_marginStart="50dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintHorizontal_bias="0.0"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="216dp" />
+        <Constraint
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_editor_absoluteY="0dp"
+            motion:layout_editor_absoluteX="16dp"
+            android:visibility="visible"
+            motion:transitionEasing="standard"></Constraint>
+    </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/start"
+        motion:constraintSetEnd="@+id/end"
+        motion:autoTransition="animateToEnd" />
+</MotionScene>

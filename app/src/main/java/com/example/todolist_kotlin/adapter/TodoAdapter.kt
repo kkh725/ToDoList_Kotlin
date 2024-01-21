@@ -3,16 +3,24 @@ package com.example.todolist_kotlin.adapter
 import android.content.DialogInterface
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todolist_kotlin.ListMainActivity
+import com.example.todolist_kotlin.databinding.ActivityListMainBinding
+import com.example.todolist_kotlin.databinding.DialogEditBinding
 import com.example.todolist_kotlin.databinding.ListItemTodoBinding //listitemtodo xml 파일을 binding
 import com.example.todolist_kotlin.model.TodoInfo
+import java.text.SimpleDateFormat
+import java.util.Date
 
 
-class TodoAdapter : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
+class TodoAdapter(private val darkBackground: View) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
 private var lstTodo : ArrayList<TodoInfo> = ArrayList()
 
@@ -58,20 +66,49 @@ private var lstTodo : ArrayList<TodoInfo> = ArrayList()
             binding.btnRemove.setOnClickListener {
                 //쓰레기통 클릭시 내부 로직 구현.
                 //onBindViewHolder에서 todoItem을 bind
+                darkBackground.visibility = VISIBLE
+
                 AlertDialog.Builder(binding.root.context)
                     .setTitle("주의")
                     .setMessage("제거하시면 데이터는 복구되지 않습니다!\n")
                     .setPositiveButton("제거",DialogInterface.OnClickListener { dialog, which ->
+                        darkBackground.visibility = INVISIBLE
                         lstTodo.remove(todoItem)
                         notifyDataSetChanged()
                         Toast.makeText(binding.root.context,"제거되었습니다.", LENGTH_SHORT).show()
                     })
                     .setNegativeButton("취소",DialogInterface.OnClickListener { dialog, which ->
-
+                        darkBackground.visibility = INVISIBLE
                     })
                     .show()
 
 
+            }
+
+            binding.root.setOnClickListener {  // list_item_todo의 모든영역 의미
+                val bindingDialog = DialogEditBinding.inflate(LayoutInflater.from(binding.root.context),binding.root,false)
+                //기존작성 데이터보여주기
+                bindingDialog.etMemo.setText(todoItem.todoContent)
+                // 어둡게 하는 배경 레이아웃 설정
+                darkBackground.visibility = VISIBLE
+
+                AlertDialog.Builder(binding.root.context) //내가 binding하고있는 화면의 메인context. 지금 리스트가 listmainactivity에 올라갈거니까.
+                    .setView(bindingDialog.root)
+                    .setPositiveButton("작성완료",DialogInterface.OnClickListener { dialogInterface, which ->
+                        //작성완료 버튼 눌렀을때.
+                        todoItem.todoContent = bindingDialog.etMemo.text.toString()
+                        todoItem.todoDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(Date())
+                        darkBackground.visibility = INVISIBLE
+                        // arraylist 수정
+
+                        lstTodo.set(adapterPosition,todoItem)
+                        notifyDataSetChanged()
+
+                    }) .setNegativeButton("취소",DialogInterface.OnClickListener { dialogInterface, which ->
+                        //알아서 취소버튼 눌려짐.
+                        darkBackground.visibility = INVISIBLE
+                    })
+                    .show()
             }
         }
     }
