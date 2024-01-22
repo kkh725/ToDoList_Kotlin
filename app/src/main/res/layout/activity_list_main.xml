@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/side_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/activity_list_main_scene2"
-    tools:context=".ListMainActivity">
+    app:layoutDescription="@xml/activity_list_main_scene"
+    tools:context=".activity.ListMainActivity">
 
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="103dp"
-        android:background="#2249BC"
+        android:background="#3055C3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,13 +22,14 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="@font/cafe24surorundair"
         android:text="To Do List"
         android:textColor="#EFE9E9"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.153"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,15 +57,17 @@
         android:src="@drawable/baseline_create_24"
         app:backgroundTint="#18FFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <View
         android:id="@+id/view3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#A8090909"
+        android:background="#B21C1B1B"
         android:visibility="invisible"
-        tools:layout_editor_absoluteX="1dp" />
+        tools:layout_editor_absoluteX="53dp"
+        tools:layout_editor_absoluteY="-64dp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

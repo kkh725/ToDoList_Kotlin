@@ -1,7 +1,7 @@
 package com.example.todolist_kotlin.adapter
 
+import android.app.Activity
 import android.content.DialogInterface
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -11,11 +11,15 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import com.example.todolist_kotlin.ListMainActivity
-import com.example.todolist_kotlin.databinding.ActivityListMainBinding
+import androidx.room.RoomDatabase
+import com.example.todolist_kotlin.database.TodoDao
+import com.example.todolist_kotlin.database.TodoDatabase
 import com.example.todolist_kotlin.databinding.DialogEditBinding
 import com.example.todolist_kotlin.databinding.ListItemTodoBinding //listitemtodo xml 파일을 binding
 import com.example.todolist_kotlin.model.TodoInfo
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -23,27 +27,7 @@ import java.util.Date
 class TodoAdapter(private val darkBackground: View) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
 private var lstTodo : ArrayList<TodoInfo> = ArrayList()
-
-    init {
-        /**
-         * 이런식으로 직접 인스턴스를 생성해주는게 아닌 보통 데이터값을 받아와서 적용해준다.
-         * main activity에서
-         */
-        val todoItem = TodoInfo()
-        todoItem.todoContent = "코틀린 마스터하기"
-        todoItem.todoDate = "20240116"
-        lstTodo.add(todoItem) //동적리스트 타입이기때문에 add
-
-        val todoItem2 = TodoInfo()
-        todoItem2.todoContent = "헬스 마스터가 되어보기"
-        todoItem2.todoDate = "20240116"
-        lstTodo.add(todoItem2)
-
-        val todoItem3 = TodoInfo()
-        todoItem3.todoContent = "취업 성공하기"
-        todoItem3.todoDate = "20240116"
-        lstTodo.add(todoItem3)
-    }
+    private lateinit var roomDatabase: TodoDatabase
 
     fun addListItem(todoItem: TodoInfo){ //todoinfo 객체를 하나 넣어줘야함.
         lstTodo.add(0,todoItem) //얘는 항상 마지막에 들어오도록 되어있는데, 스택형식으로 넣어주면 좋을듯? 이렇게 해주면 항상 0번째 index로 들어오게된다.
@@ -73,13 +57,30 @@ private var lstTodo : ArrayList<TodoInfo> = ArrayList()
                     .setMessage("제거하시면 데이터는 복구되지 않습니다!\n")
                     .setPositiveButton("제거",DialogInterface.OnClickListener { dialog, which ->
                         darkBackground.visibility = INVISIBLE
-                        lstTodo.remove(todoItem)
-                        notifyDataSetChanged()
-                        Toast.makeText(binding.root.context,"제거되었습니다.", LENGTH_SHORT).show()
+
+
+
+                        //코루틴을 통한 데이터베이스 값 삭제
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val innerLstTodo = roomDatabase.todoDao().getAllReadData() //이 값을 어댑터 생성시에 받아와도 좋을듯?
+                            for (item in innerLstTodo){
+                                if(item.todoContent == todoItem.todoContent && item.todoDate == todoItem.todoDate)
+                                roomDatabase.todoDao().deleteTodoData(item)
+                            }
+
+                            lstTodo.remove(todoItem)
+                            (binding.root.context as Activity).runOnUiThread {
+                                notifyDataSetChanged()
+                                Toast.makeText(binding.root.context,"제거되었습니다.", LENGTH_SHORT).show()
+                            } //runonuithread는 액티비티상에서만 사용가능함.
+
+                        }
+
                     })
                     .setNegativeButton("취소",DialogInterface.OnClickListener { dialog, which ->
                         darkBackground.visibility = INVISIBLE
                     })
+                    .setOnDismissListener { darkBackground.visibility = INVISIBLE }
                     .show()
 
 
@@ -95,19 +96,32 @@ private var lstTodo : ArrayList<TodoInfo> = ArrayList()
                 AlertDialog.Builder(binding.root.context) //내가 binding하고있는 화면의 메인context. 지금 리스트가 listmainactivity에 올라갈거니까.
                     .setView(bindingDialog.root)
                     .setPositiveButton("작성완료",DialogInterface.OnClickListener { dialogInterface, which ->
-                        //작성완료 버튼 눌렀을때.
-                        todoItem.todoContent = bindingDialog.etMemo.text.toString()
-                        todoItem.todoDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(Date())
-                        darkBackground.visibility = INVISIBLE
-                        // arraylist 수정
+                        CoroutineScope(Dispatchers.IO).launch {
 
-                        lstTodo.set(adapterPosition,todoItem)
-                        notifyDataSetChanged()
+                            val innerLstTodo = roomDatabase.todoDao().getAllReadData()
+                            for (item in innerLstTodo){
+                                if(item.todoContent == todoItem.todoContent && item.todoDate == todoItem.todoDate)
+                                    item.todoContent = bindingDialog.etMemo.text.toString()
+                                item.todoDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(Date())
+                                roomDatabase.todoDao().updateTodoData(item)
+                            }
+
+                            //ui modify
+                            todoItem.todoContent = bindingDialog.etMemo.text.toString()
+                            todoItem.todoDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(Date())
+                            darkBackground.visibility = INVISIBLE
+                            // arraylist 수정
+                            lstTodo.set(adapterPosition,todoItem)
+
+                            (binding.root.context as Activity).runOnUiThread { notifyDataSetChanged() } //runonuithread는 액티비티상에서만 사용가능함.
+                        }
+
 
                     }) .setNegativeButton("취소",DialogInterface.OnClickListener { dialogInterface, which ->
                         //알아서 취소버튼 눌려짐.
                         darkBackground.visibility = INVISIBLE
                     })
+                    .setOnDismissListener { darkBackground.visibility = INVISIBLE }
                     .show()
             }
         }
@@ -120,6 +134,8 @@ private var lstTodo : ArrayList<TodoInfo> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
         val binding = ListItemTodoBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        //room db 초기화
+        roomDatabase = TodoDatabase.getInstance(binding.root.context)!!
         return TodoViewHolder(binding)
     }
 
