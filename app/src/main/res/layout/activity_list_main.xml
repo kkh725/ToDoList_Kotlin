@@ -5,7 +5,7 @@
     android:id="@+id/side_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/activity_list_main_scene"
+    app:layoutDescription="@xml/activity_list_main_scene2"
     tools:context=".activity.ListMainActivity">
 
     <View
@@ -36,7 +36,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_todo"
         android:layout_width="381dp"
-        android:layout_height="605dp"
+        android:layout_height="546dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
@@ -56,9 +56,24 @@
         android:elevation="4dp"
         android:src="@drawable/baseline_create_24"
         app:backgroundTint="#18FFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/adView"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
+
+
+    <!-- adUnitId 실제 값으로 바꾸기. 이건 테스트용 구글 에드몹에서 확인 -->
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <View
         android:id="@+id/view3"
@@ -66,8 +81,8 @@
         android:layout_height="match_parent"
         android:background="#B21C1B1B"
         android:visibility="invisible"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="-64dp" />
+
+        />
 
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

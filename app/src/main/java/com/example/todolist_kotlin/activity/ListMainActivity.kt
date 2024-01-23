@@ -13,6 +13,8 @@ import com.example.todolist_kotlin.database.TodoDatabase
 import com.example.todolist_kotlin.databinding.ActivityListMainBinding
 import com.example.todolist_kotlin.databinding.DialogEditBinding
 import com.example.todolist_kotlin.model.TodoInfo
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,6 +37,12 @@ class ListMainActivity : AppCompatActivity() {
 
 
         setContentView(binding.root)
+
+        MobileAds.initialize(this) {}
+
+        //하단베너 광고 로드
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         //어댑터 인스턴스 생성
         todoAdapter = TodoAdapter(dark_background)
@@ -76,7 +84,7 @@ class ListMainActivity : AppCompatActivity() {
                 .setView(bindingDialog.root)
                 .setPositiveButton("작성완료",DialogInterface.OnClickListener { dialogInterface, which ->
                     //작성완료 버튼 눌렀을때.
-                    window.setBackgroundDrawableResource(R.drawable.gradient_red)
+
                     val todoItem = TodoInfo()
                     todoItem.todoContent = bindingDialog.etMemo.text.toString()
                     todoItem.todoDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(Date())
