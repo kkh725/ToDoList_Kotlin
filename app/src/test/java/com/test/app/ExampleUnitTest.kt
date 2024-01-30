@@ -1,4 +1,4 @@
-package com.example.todolist_kotlin
+package com.test.app
 
 import org.junit.Test
 

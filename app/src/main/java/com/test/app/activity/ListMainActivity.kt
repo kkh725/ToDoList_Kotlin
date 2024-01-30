@@ -1,4 +1,4 @@
-package com.example.todolist_kotlin.activity
+package com.test.app.activity
 
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
@@ -6,18 +6,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.room.RoomDatabase
-import com.example.todolist_kotlin.R
-import com.example.todolist_kotlin.adapter.TodoAdapter
-import com.example.todolist_kotlin.database.TodoDatabase
-import com.example.todolist_kotlin.databinding.ActivityListMainBinding
-import com.example.todolist_kotlin.databinding.DialogEditBinding
-import com.example.todolist_kotlin.model.TodoInfo
+import com.test.app.adapter.TodoAdapter
+import com.test.app.database.TodoDatabase
+import com.test.app.model.TodoInfo
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import test.ToDoList_app.databinding.ActivityListMainBinding
+import test.ToDoList_app.databinding.DialogEditBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -34,10 +32,9 @@ class ListMainActivity : AppCompatActivity() {
         dark_background = binding.view3
         onWindowFocusChanged(true)
 
-
-
         setContentView(binding.root)
 
+        //광고 sdk 초기화
         MobileAds.initialize(this) {}
 
         //하단베너 광고 로드

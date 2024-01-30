@@ -1,4 +1,4 @@
-package com.example.todolist_kotlin.database
+package com.test.app.database
 
 import androidx.annotation.RequiresPermission.Read
 import androidx.room.Dao
@@ -6,7 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.todolist_kotlin.model.TodoInfo
+import com.test.app.model.TodoInfo
 
 @Dao
 interface TodoDao {

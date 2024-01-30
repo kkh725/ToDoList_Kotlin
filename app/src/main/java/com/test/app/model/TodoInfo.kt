@@ -1,4 +1,4 @@
-package com.example.todolist_kotlin.model
+package com.test.app.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

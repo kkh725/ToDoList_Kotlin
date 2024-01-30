@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/activity_list_main_scene2"
-    tools:context=".activity.ListMainActivity">
+    tools:context="com.test.app.activity.ListMainActivity">
 
     <View
         android:id="@+id/view2"
@@ -70,7 +70,6 @@
         android:layout_centerHorizontal="true"
         app:adSize="BANNER"
         app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

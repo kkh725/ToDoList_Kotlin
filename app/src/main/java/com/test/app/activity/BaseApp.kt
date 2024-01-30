@@ -1,7 +1,4 @@
-package com.example.todolist_kotlin.activity
-
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+package com.test.app.activity
 
 
 import java.io.File

@@ -7,26 +7,21 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/to_do_icon_128px"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDoList_Kotlin"
         tools:targetApi="31">
+
         <activity
-            android:name=".activity.BaseApp"
+            android:name="com.test.app.activity.ListMainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activity.ListMainActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".activity.MainActivity"
+            android:name="com.test.app.activity.MainActivity"
             android:exported="true">
 
             <meta-data
@@ -34,7 +29,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activity.SplashActivity"
+            android:name="com.test.app.activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

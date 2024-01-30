@@ -1,12 +1,12 @@
-package com.example.todolist_kotlin.activity
+package com.test.app.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import com.example.todolist_kotlin.R
-import com.example.todolist_kotlin.databinding.ActivitySplashBinding
+import test.ToDoList_app.R
+import test.ToDoList_app.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
     lateinit var binding: ActivitySplashBinding
@@ -25,6 +25,7 @@ class SplashActivity : AppCompatActivity() {
              * 그저 ui 에서 진행될 사항을 예약하는정도의 메서드이다.
              */
             binding.view.setBackgroundResource(R.drawable.gradient)
+
 
             //1.5초 뒤에 진행
         },1500)

@@ -1,11 +1,10 @@
-package com.example.todolist_kotlin.database
+package com.test.app.database
 
 import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
-import com.example.todolist_kotlin.model.TodoInfo
+import com.test.app.model.TodoInfo
 
 @Database(entities = [TodoInfo::class], version = 1)
 abstract class TodoDatabase : RoomDatabase() {

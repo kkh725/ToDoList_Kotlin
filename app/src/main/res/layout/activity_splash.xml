@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layoutDescription="@xml/activity_splash_scene"
-    tools:context=".activity.SplashActivity">
+    tools:context="com.test.app.activity.SplashActivity">
 
     <View
         android:id="@+id/view"

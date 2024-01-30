@@ -1,11 +1,11 @@
-package com.example.todolist_kotlin.activity
+package com.test.app.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
-import com.example.todolist_kotlin.R
-import com.example.todolist_kotlin.databinding.ActivityMainBinding
+import test.ToDoList_app.R
+import test.ToDoList_app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

@@ -1,4 +1,4 @@
-package com.example.todolist_kotlin.adapter
+package com.test.app.adapter
 
 import android.app.Activity
 import android.content.DialogInterface
@@ -11,15 +11,13 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.RoomDatabase
-import com.example.todolist_kotlin.database.TodoDao
-import com.example.todolist_kotlin.database.TodoDatabase
-import com.example.todolist_kotlin.databinding.DialogEditBinding
-import com.example.todolist_kotlin.databinding.ListItemTodoBinding //listitemtodo xml 파일을 binding
-import com.example.todolist_kotlin.model.TodoInfo
+import com.test.app.database.TodoDatabase
+import com.test.app.model.TodoInfo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import test.ToDoList_app.databinding.DialogEditBinding
+import test.ToDoList_app.databinding.ListItemTodoBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -64,8 +62,8 @@ private var lstTodo : ArrayList<TodoInfo> = ArrayList()
                         CoroutineScope(Dispatchers.IO).launch {
                             val innerLstTodo = roomDatabase.todoDao().getAllReadData() //이 값을 어댑터 생성시에 받아와도 좋을듯?
                             for (item in innerLstTodo){
-                                if(item.todoContent == todoItem.todoContent && item.todoDate == todoItem.todoDate)
-                                roomDatabase.todoDao().deleteTodoData(item)
+                                if(item.todoContent == todoItem.todoContent && item.todoDate == todoItem.todoDate){roomDatabase.todoDao().deleteTodoData(item)}
+
                             }
 
                             lstTodo.remove(todoItem)
